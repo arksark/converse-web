@@ -1,0 +1,82 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel File Upload</title>
+</head>
+<body>
+    <h1>Excel File Upload</h1>
+
+    <!-- Button to Locate Excel File -->
+    <h2>Locate Excel File</h2>
+    <form id="locateForm" enctype="multipart/form-data">
+        <input type="file" name="locateExcelFile" id="locateExcelFile" accept=".xlsx">
+    </form>
+    <button type="button" onclick="locateExcelFile()">Locate Excel File</button>
+
+    <!-- Button to Upload Excel File and Run excelToMongoDb.js Script -->
+    <h2>Upload Excel File and Run excelToMongoDb.js Script</h2>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="excelFile" id="excelFile" accept=".xlsx">
+    </form>
+    <button type="button" onclick="uploadAndRunExcelToMongoDb()">Upload and Run excelToMongoDb.js</button>
+
+    <!-- Button to Upload Another Excel File and Run dateData.js Script -->
+    <h2>Upload Another Excel File and Run dateData.js Script</h2>
+    <form id="uploadAnotherForm" enctype="multipart/form-data">
+        <input type="file" name="excelFile2" id="excelFile2" accept=".xlsx">
+    </form>
+    <button type="button" onclick="uploadAndRunDateData()">Upload and Run dateData.js</button>
+
+    <script>
+        function locateExcelFile() {
+            const input = document.getElementById('locateExcelFile');
+            const file = input.files[0];
+
+            // Handle locating the Excel file as needed
+        }
+
+        function uploadAndRunExcelToMongoDb() {
+            const input = document.getElementById('excelFile');
+            const file = input.files[0];
+
+            const formData = new FormData();
+            formData.append('excelFile', file);
+
+            fetch('/upload-excel', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Excel file uploaded and excelToMongoDb.js script run successfully!');
+            })
+            .catch(error => {
+                console.error('Error uploading Excel file:', error);
+            });
+        }
+
+        function uploadAndRunDateData() {
+            const input = document.getElementById('excelFile2');
+            const file = input.files[0];
+
+            const formData = new FormData();
+            formData.append('excelFile', file);
+
+            fetch('/run-dateData-script', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Excel file uploaded and dateData.js script run successfully!');
+            })
+            .catch(error => {
+                console.error('Error running dateData.js script:', error);
+            });
+        }
+    </script>
+</body>
+</html>
